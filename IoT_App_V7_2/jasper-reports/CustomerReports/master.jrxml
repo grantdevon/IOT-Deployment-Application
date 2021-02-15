@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Master1" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="0cbe7068-14c8-4ae0-b3a5-f25ea372343f">
+	<parameter name="schemaName" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["snapshot_1487826039265_001"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="job_cardUUID" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct job_card.job_card_name,
+job_card.job_number,
+jobtypes.jobtype,
+job_card.job_card_name,
+client_account.account_name,
+job_card.punchlist_comments,
+"user".name,
+job_card.customer_name,
+job_card.created_at,
+job_card.customer_signature_blob,
+job_card.technician_signature_blob,
+photograph.photo_blob
+from $P!{schemaName}.job_card
+left join $P!{schemaName}.photograph on $P!{schemaName}.job_card."_id_" = $P!{schemaName}.photograph.job_cards_fk
+left join $P!{schemaName}."user" on $P!{schemaName}."user"."_id_" = $P!{schemaName}.job_card.technicians_fk
+left join $P!{schemaName}.asset on $P!{schemaName}.asset."_id_" = $P!{schemaName}.job_card.assets_fk
+left join $P!{schemaName}.jobtypes on $P!{schemaName}.jobtypes."_id_" = job_card.jobtype_fk
+left join $P!{schemaName}.client_account on $P!{schemaName}.client_account."_id_" = $P!{schemaName}.asset.clientaccounts_fk
+where job_card._id_ = $P{job_cardUUID}::uuid
+ORDER BY photo_blob ASC
+LIMIT 3
+;]]>
+	</queryString>
+	<field name="job_card_name" class="java.lang.String"/>
+	<field name="job_number" class="java.lang.String"/>
+	<field name="jobtype" class="java.lang.String"/>
+	<field name="account_name" class="java.lang.String"/>
+	<field name="punchlist_comments" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="customer_name" class="java.lang.String"/>
+	<field name="created_at" class="java.lang.String"/>
+	<field name="customer_signature_blob" class="java.awt.Image"/>
+	<field name="technician_signature_blob" class="java.awt.Image"/>
+	<field name="photo_blob" class="java.awt.Image"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image vAlign="Middle">
+				<reportElement x="0" y="0" width="80" height="79" uuid="46699870-da11-48ce-97f9-ee0b27908ea9"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<imageExpression><![CDATA["mezzanineLogo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="80" y="0" width="470" height="30" backcolor="#33FF3D" uuid="7069a281-34e0-4dd3-9c34-e79b9ad2840e"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Operations]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="30" width="470" height="49" uuid="92e6b035-e238-4e8b-9ff5-4cd4df539d04"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Installation sign-off sheet"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="130" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="10" width="550" height="30" backcolor="#33FF3D" uuid="dc11c061-92cc-4eff-a88b-8bfb2f3840d5">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Installation detail summary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="80" height="30" uuid="df92d698-ddb5-4770-863c-4d1b4992920b"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Job name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="80" height="30" uuid="0a527437-4d00-485d-a9da-95475cb17e13"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Project]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="80" height="30" uuid="b58b8695-276c-4fa7-8f11-da4c98e1d351"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Client]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="40" width="80" height="30" uuid="8be48b55-0ed4-419b-ba80-fb15d92b4768"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Job number]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="40" width="190" height="30" uuid="8eb6141f-0c2c-40bd-816b-e207a3e3f0d0"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{job_card_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="40" width="200" height="30" uuid="6acaeb9a-4ec1-4fc9-b15a-102eee9b4362"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{job_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="70" width="470" height="30" uuid="1675e539-3e3b-47e8-8a1e-e6ca3a943aba"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{jobtype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="100" width="470" height="30" uuid="92cfcdc2-1a1e-4b50-a9f4-b7fccbe980f9"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{account_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="150" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout"/>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="10" width="550" height="30" backcolor="#33FF3D" uuid="ad421ae5-3f5a-4c29-b436-8efbdbf08f95"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Closed out comments]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="40" width="550" height="50" uuid="ec773398-31e2-4e33-88c1-4f7009761e3f"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{punchlist_comments}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="120" width="550" height="30" backcolor="#33FF3D" uuid="cc9755c2-b25a-47fb-b873-7bc3d0941266">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Installation pictures ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="111">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<image>
+				<reportElement mode="Transparent" x="0" y="0" width="550" height="100" uuid="8bf21ae9-eec4-4c39-b4c1-4c174ec59aab">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<imageExpression><![CDATA[$F{photo_blob}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="250" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout"/>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="30" width="550" height="30" backcolor="#33FF3D" uuid="91747dd8-57be-41ae-a0b3-94143f7a78a5"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Signatures]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="550" height="80" uuid="f03f04a3-6f27-413d-96f8-4f5391aef67a"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[The Client representative and Mezzanine Ware representative agree that the above-named Equipment has achieved the installation  and performance criteria specified in Contract between the parties. Other than any items listed above, Mezzanine Ware RF (pty) Ltd’s sole remaining obligation is contained in the agreed Service Level Agreement. Mezzanine Ware (Pty) Ltd agrees to correct listed items without any unnecessary delays on its part. By acceptance of the installation the client takes ownership of the hardware and installed assets and will undertake the required equipment protection and maintenance requirements not covered under SLA.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="140" width="130" height="30" uuid="5869bf45-766d-4c66-adad-ab77187aea55"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="140" width="120" height="30" uuid="3e8de847-592b-474d-bfb0-0183fdd5d944"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Representing]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="140" width="130" height="30" uuid="229f0340-7794-4e4d-bfc7-dd5856f8fb10"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="140" width="170" height="30" uuid="f083aa03-1e62-4341-8d53-fcc03540d36b"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Signature]]></text>
+			</staticText>
+			<image>
+				<reportElement x="250" y="170" width="170" height="40" uuid="dca29e6e-407f-46c5-a2fb-a2d79db5cde2"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<imageExpression><![CDATA[$F{customer_signature_blob}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="250" y="210" width="170" height="40" uuid="b1c72295-ceed-486b-86cf-73061cef88ac"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<imageExpression><![CDATA[$F{technician_signature_blob}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="170" width="130" height="40" uuid="85d20564-6976-4205-83ce-448698294efc"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="210" width="130" height="40" uuid="17351f5c-34b0-4c0a-bb87-74d697f86f74"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="170" width="120" height="40" uuid="0c8bf1ed-2045-4758-a749-d8580301c0da"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{account_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="210" width="120" height="40" uuid="1a733e0a-85e3-469c-b30b-12309171d137"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA["Mezzanine Ware RF (Pty) Ltd"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="170" width="130" height="40" uuid="b1b4027c-a94a-49fa-a1d8-8b13a33029f3"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{created_at}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="210" width="130" height="40" uuid="d3dfe448-367f-44ad-bd30-0a1c199550e6"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{created_at}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="20" width="170" height="54" uuid="9f313e97-e1f6-4af4-9057-99b1326d8648"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Octo Place Block A4 Electron street Technopark Stellenbosch 7600    Tel +27 21 880 2033]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="20" width="180" height="54" uuid="379d1b94-5c09-4c0d-b7f4-f3b2c5c77122"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Suite 173 Private bag x14 Die Boord Stellenbosch 7613 solutions@mezzanineware.com www.mezzanineware.com  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="20" width="169" height="54" uuid="74e0bbac-074f-40e6-838b-3ecbe37b2b91"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Mezzanine Ware RF (Pty) Ltd Registration Number: 2009/009091/07 ]]></text>
+			</staticText>
+			<break>
+				<reportElement x="0" y="74" width="570" height="1" uuid="9368f132-a853-478f-b6d4-d26186a7d395"/>
+			</break>
+		</band>
+	</pageFooter>
+</jasperReport>

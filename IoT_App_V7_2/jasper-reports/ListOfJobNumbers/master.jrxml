@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Master1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0cbe7068-14c8-4ae0-b3a5-f25ea372343f">
+	<parameter name="schemaName" class="java.lang.String">
+	    <parameterDescription><![CDATA[]]></parameterDescription>
+	    <defaultValueExpression><![CDATA["snapshot_1487826039265_001"]]></defaultValueExpression>
+	  </parameter>
+
+	<queryString>
+	  <![CDATA[select
+		job_card.job_number,
+		jobtypes.jobtype,
+		client_account.account_name,
+		"user".name
+		from $P!{schemaName}.job_card
+		left join $P!{schemaName}."user" on $P!{schemaName}."user"."_id_" = $P!{schemaName}.job_card.technicians_fk
+		left join $P!{schemaName}.asset on $P!{schemaName}.asset."_id_" = $P!{schemaName}.job_card.assets_fk
+		left join $P!{schemaName}.jobtypes on $P!{schemaName}.jobtypes."_id_" = $P!{schemaName}.job_card.jobtype_fk
+		left join $P!{schemaName}.client_account on $P!{schemaName}.client_account."_id_" = $P!{schemaName}.asset.clientaccounts_fk;]]>
+	</queryString>
+	<field name="job_number" class="java.lang.String"/>
+	<field name="jobtype" class="java.lang.String"/>
+	<field name="account_name" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="100" y="0" width="360" height="60" backcolor="#80E670" uuid="3ea85f25-d1b1-496d-8cee-57f8368ce077"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A list of all the jobcards]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="75">
+			<staticText>
+				<reportElement mode="Opaque" x="80" y="30" width="100" height="45" backcolor="#80E670" uuid="3142fea4-e0e5-43cb-b157-60270cc11225"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Job number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="180" y="30" width="100" height="45" backcolor="#80E670" uuid="d08fdaff-7328-4f40-a9ea-bbc69ad7218a"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Job type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="280" y="30" width="100" height="45" backcolor="#80E670" uuid="44c73de8-d6e8-4961-a5c8-2286aeaf1024"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Client]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="380" y="30" width="100" height="45" backcolor="#80E670" uuid="00c493eb-4068-40b0-adc7-ca8006f34e9d"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Technician]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="100" height="40" uuid="b3bde09a-6936-4080-a940-421335462a0f"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{job_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="100" height="40" uuid="14fc05e9-e31e-4593-87a2-84ec73f05109"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jobtype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="100" height="40" uuid="585036ce-5458-4ce0-ac1b-29b6759f506b"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{account_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="100" height="40" uuid="d8ab7266-4335-4c22-8232-cc99e3bde249"/>
+				<box>
+					<pen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

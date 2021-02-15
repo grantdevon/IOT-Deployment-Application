@@ -1,0 +1,33 @@
+unit AssetTypePres;
+
+AssetTypes assetType;
+AssetTypes deletedAsset;
+
+bool editing;
+
+void init(){
+
+  assetType = AssetTypes:new();
+  editing = false;
+  assetType.deleted = false;
+}
+
+void saveAsset(){
+  AssetTypeControllers:saveAsset(assetType);
+  init();
+}
+
+void editAsset(){
+  editing = true;
+  return null;
+}
+
+DSL_VIEWS back(){
+  return DSL_VIEWS.configurationMenuView;
+}
+
+DSL_VIEWS deleteAsset(){
+  assetType.deleted = true;
+  init();
+  return null;
+}

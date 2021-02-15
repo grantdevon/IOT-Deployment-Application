@@ -1,0 +1,40 @@
+unit ConfigPackageUnit;
+
+string name;
+string description;
+ConfigurationPackage[] configurationPackages;
+ConfigurationPackage configurationPackage;
+DeploymentType deploymentTypeToAdd;
+
+void init(){
+  name = null;
+  description = null;
+  configurationPackages.clear();
+  setCollections();
+}
+
+void createPackage(){
+  // name = deploymentTypeToAdd;
+  ConfigurationPackageController:createConfigPackage(name, description);
+  init();
+}
+
+void setCollections(){
+  configurationPackages = ConfigurationPackageController:getAllNonDeletedConfigs();
+}
+
+DSL_VIEWS addConfigQuestions(){
+
+  ConfigQuestionUnit:configurationPackage = configurationPackage;
+  return DSL_VIEWS.configQuestion_form;
+
+}
+
+DSL_VIEWS deleteConfigQuestions(){
+  configurationPackage.deleted = true;
+  init();
+}
+
+DSL_VIEWS back(){
+  return DSL_VIEWS.configurationMenuView;
+}

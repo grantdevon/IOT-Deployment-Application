@@ -1,0 +1,34 @@
+unit JobTypePres;
+
+JobTypes jobType;
+JobTypes deletedJobType;
+
+bool editing;
+
+void init(){
+
+  jobType = JobTypes:new();
+  editing = false;
+  jobType.deleted = false;
+
+}
+
+void saveJobType(){
+  JobTypeControllers:saveJobType(jobType);
+  init();
+}
+
+void editJobType(){
+  editing = true;
+  return null;
+}
+
+DSL_VIEWS back(){
+  return DSL_VIEWS.configurationMenuView;
+}
+
+DSL_VIEWS deleteJobType(){
+  jobType.deleted = true;
+  init();
+  return null;
+}

@@ -1,0 +1,88 @@
+unit TechniciansPres;
+
+User technician;
+User deletedTechnician;
+
+int open_jobs;
+
+bool editing;
+
+void init(){
+  technician = User:new();
+  technician.deleted = false;
+  editing = false;
+  TechnicianControllers:countOpenJobs();
+  TechnicianControllers:countClosedJobs();
+  // countStatus();
+}
+
+DSL_VIEWS addNew(){
+  return DSL_VIEWS.TechniciansView;
+}
+
+DSL_VIEWS backToOverView(){
+  return DSL_VIEWS.TechnicianOverview;
+}
+
+DSL_VIEWS viewTechnician(){
+  return DSL_VIEWS.TechnicianDetails;
+}
+
+DSL_VIEWS editTechnician() {
+  editing = true;
+  return null;
+}
+
+DSL_VIEWS deleteTechnician() {
+  Job_card[] temp = deletedTechnician.job_cards;
+if(temp.length()==0){
+  deletedTechnician.deleted = true;
+  deletedTechnician.save();
+}
+else {
+  Mez:alertError("error_technician_linked_to_job_card");
+}
+return null;
+}
+  // technician.deleted = true;
+  // init();
+  // return null;
+// }
+
+
+
+void saveTechnician(){
+  TechnicianControllers:saveTechnician(technician);
+  init();
+}
+
+DSL_VIEWS back(){
+  return DSL_VIEWS.JobCardMenuView;
+}
+
+// void countStatus(){
+//
+// Job_card relationName = technician.job_cards;
+//
+// string status = relationName.status;
+//
+// if (status == "Pending") {
+//   open_jobs++;
+//   technician.open_jobs = open_jobs;
+// }
+//
+// }
+
+// User[] getCountPending(){
+//   string query = /%select count(*) from job_card left join "user" on "user"."_id_" = job_card.technicians_fk where job_card.status = 'Pending' and job_card.technicians_fk = $P{USER_APP_ROLE_ID}::uuid
+//  %/;
+//
+//  User[] result = sql:query(query);
+//  technician.open_jobs = result;
+//  return result;
+// }
+
+// void countStatus(){
+//   // User technicians;
+//   technician.open_jobs = getCountPending();
+// }

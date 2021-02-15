@@ -1,0 +1,6 @@
+{
+    "name": "List of all job cards",
+    "description":"A list of all the job cards",
+    "rolesAllowed":["Field Technician"]
+
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Site acceptance test certificate",
+    "description":"all Site acceptance test certificate",
+    "rolesAllowed":["Field Technician"],
+
+    "parameters":[
+      {
+        "parameterName":"job_cardUUID",
+        "displayName":"Job Card:",
+        "type":"uuid",
+        "searchType":"Job_card.job_number"
+      }
+    ]
+
+}

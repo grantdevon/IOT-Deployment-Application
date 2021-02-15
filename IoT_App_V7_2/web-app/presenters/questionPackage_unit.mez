@@ -1,0 +1,38 @@
+unit QuestionPackage_unit;
+
+string name;
+string heading;
+QuestionPackage[] question_packages;
+QuestionPackage question_package;
+DeploymentType deploymentTypeToAdd;
+
+void init(){
+  name = null;
+  heading = null;
+
+  question_packages.clear();
+  setCollections();
+}
+
+void createPackage(){
+  Question_package_controller:createQuestionPackage(name, heading);
+  init();
+}
+
+void setCollections(){
+  question_packages = Question_package_controller:getAllNonArchivedQuestion_Packages();
+}
+
+DSL_VIEWS addQuestions(){
+  Question_Unit:question_package = question_package;
+  return DSL_VIEWS.question_form;
+}
+
+DSL_VIEWS deleteQuestionPackage(){
+  question_package.deleted = true;
+  init();
+}
+
+DSL_VIEWS back(){
+  return DSL_VIEWS.configurationMenuView;
+}

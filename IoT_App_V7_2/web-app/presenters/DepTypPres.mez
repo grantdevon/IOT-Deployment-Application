@@ -1,0 +1,38 @@
+unit DepTypePres;
+
+DeploymentType depType;
+ConfigurationPackage config_packageToAdd;
+QuestionPackage question_PackageToAdd;
+
+
+bool editing;
+
+void init(){
+
+  depType = DeploymentType:new();
+  editing = false;
+  depType.deleted = false;
+
+}
+
+void saveDepType(){
+  depType.config_Package = config_packageToAdd;
+  depType.question_Package = question_PackageToAdd;
+  DepTypeControllers:saveDepType(depType,config_packageToAdd,question_PackageToAdd);
+  init();
+}
+
+void editDepType(){
+  editing = true;
+  return null;
+}
+
+DSL_VIEWS back(){
+  return DSL_VIEWS.configurationMenuView;
+}
+
+DSL_VIEWS deleteDepType(){
+  depType.deleted = true;
+  init();
+  return null;
+}

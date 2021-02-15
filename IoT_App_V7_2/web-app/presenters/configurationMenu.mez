@@ -1,0 +1,94 @@
+unit configurationMenu;
+
+MenuItem menuItem;
+
+MenuItem[] menuItems;
+
+MenuItem[] initMenu() {
+	menuItems.clear();
+
+	// MenuItem assetTypeMenuItem = createMenuItem(
+	// String:translate("menu_item.asset_types"),
+	// DSL_VIEWS.AssetTypeView,
+	// countAssets()
+	// );
+	// menuItems.append(assetTypeMenuItem);
+	//
+	// MenuItem jobTypeMenuItem = createMenuItem(
+	// String:translate("menu_item.job_type"),
+  // DSL_VIEWS.JobTypesView,
+	// countJobTypes()
+	// );
+	// menuItems.append(jobTypeMenuItem);
+	//
+	// MenuItem configurationSettingsMenuItem = createMenuItem(
+	// String:translate("menu_item.configuration_settings"),
+	// DSL_VIEWS.ConfigQuestionPackageForm,
+	// countConfigSets()
+	// );
+	// menuItems.append(configurationSettingsMenuItem);
+	//
+	// MenuItem measurementSettingsMenuItem = createMenuItem(
+	// String:translate("menu_item.measurement_sets"),
+	// DSL_VIEWS.questionPackageForm,
+	// countMeasurementSets()
+	// );
+	// menuItems.append(measurementSettingsMenuItem);
+	//
+	// MenuItem deploymentTypeMenuItem = createMenuItem(
+	// String:translate("menu_item.deployment_type"),
+	// DSL_VIEWS.deploymentTypeView,
+	// countDeploymentType()
+	// );
+	// menuItems.append(deploymentTypeMenuItem);
+
+	int order = 1;
+	menuItems.append(createMenuItem(order,	String:translate("menu_item.asset_types"),DSL_VIEWS.AssetTypeView,countAssets())); order++;
+	menuItems.append(createMenuItem(order,	String:translate("menu_item.job_type"),DSL_VIEWS.JobTypesView,countJobTypes())); order++;
+	menuItems.append(createMenuItem(order,String:translate("menu_item.configuration_settings"),DSL_VIEWS.ConfigQuestionPackageForm,countConfigSets())); order++;
+		menuItems.append(createMenuItem(order,	String:translate("menu_item.measurement_sets"),DSL_VIEWS.questionPackageForm,countMeasurementSets())); order++;
+		menuItems.append(createMenuItem(order,	String:translate("menu_item.deployment_type"),DSL_VIEWS.deploymentTypeView,countDeploymentType())); order++;
+
+
+return menuItems;
+
+
+}
+
+int countAssets(){
+AssetTypes[] assetTypes = AssetTypes:equals(deleted, false);
+return assetTypes.length();
+}
+
+int countJobTypes() {
+	JobTypes[] jobTypes = JobTypes:equals(deleted, false);
+	return jobTypes.length();
+}
+
+int countConfigSets() {
+	ConfigurationPackage[] configSet = ConfigurationPackage:equals(deleted, false);
+	return configSet.length();
+}
+
+int countMeasurementSets(){
+	QuestionPackage[] questionPackage = QuestionPackage:equals(deleted, false);
+	return questionPackage.length();
+}
+
+int countDeploymentType(){
+	DeploymentType[] deploymentType = DeploymentType:equals(deleted, false);
+	return deploymentType.length();
+}
+
+MenuItem createMenuItem(int order,string label, DSL_VIEWS navigationDestination, int entityCount) {
+	MenuItem menuItem = MenuItem:new();
+	menuItem.label = label;
+	menuItem.order = order;
+	menuItem.description = entityCount;
+	menuItem.navigationDestination = navigationDestination;
+	return menuItem;
+}
+
+DSL_VIEWS selectMenuItem() {
+	return menuItem.navigationDestination;
+}

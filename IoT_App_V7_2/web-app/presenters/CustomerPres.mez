@@ -1,0 +1,49 @@
+unit CustomerPres;
+
+Customer customer;
+Customer selectedCustomer;
+Client_account client_account;
+bool editing;
+
+void init(){
+  customer = Customer:new();
+  customer.deleted = false;
+  editing = false;
+  client_account = null;
+}
+
+void saveCustomer(){
+  CustomerController:saveCustomer(customer,client_account);
+  init();
+}
+
+DSL_VIEWS deleteCustomer(){
+  customer.deleted = true;
+  init();
+  return null;
+}
+
+DSL_VIEWS editCustomers(){
+  editing = true;
+  init();
+}
+
+DSL_VIEWS viewCustomer(){
+  return DSL_VIEWS.CustomerDetails;
+}
+
+DSL_VIEWS back(){
+  return DSL_VIEWS.JobCardMenuView;
+}
+
+DSL_VIEWS backToCustomerView(){
+  return DSL_VIEWS.CustomerView;
+}
+
+DSL_VIEWS addNew(){
+  return DSL_VIEWS.CustomerView;
+}
+
+DSL_VIEWS backToOverView(){
+  return DSL_VIEWS.CustomerOverView;
+}

@@ -1,0 +1,34 @@
+unit Question_Unit;
+
+string questionValue;
+string response_type;
+string[] response_types;
+
+Question[] questions;
+Question question;
+
+QuestionPackage question_package;
+
+
+void init(){
+  questionValue = null;
+  response_type = null;
+  response_types.clear();
+  response_types.append("Text");
+  response_types.append("DateTime");
+  response_types.append("Number");
+  setCollections();
+}
+
+void setCollections(){
+  questions = Question_Controller:getQuestionsForQuestionPackage(question_package);
+}
+
+void createButton(){
+  Question result = Question_Controller:createQuestion(questionValue, response_type, question_package);
+  init();
+}
+
+DSL_VIEWS backButton(){
+  return DSL_VIEWS.questionPackageForm;
+}

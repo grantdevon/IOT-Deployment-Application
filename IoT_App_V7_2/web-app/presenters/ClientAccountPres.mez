@@ -1,0 +1,57 @@
+unit CientAccountPres;
+
+Client_account client_account;
+Client_account selectedClientAccount;
+Client_account deletedClientAccount;
+
+bool editing;
+
+void init(){
+ client_account = Client_account:new();
+ editing = false;
+ client_account.deleted = false;
+
+}
+
+DSL_VIEWS addClientAccount(){
+  return DSL_VIEWS.ClientAccountView;
+}
+
+DSL_VIEWS viewClientAccount(){
+  return DSL_VIEWS.ClientAccountDetails;
+}
+
+DSL_VIEWS editClientAccount() {
+  editing = true;
+  return null;
+}
+
+DSL_VIEWS deleteClientAccount() {
+
+  Asset[] temp = deletedClientAccount.assets;
+if(temp.length()==0){
+  deletedClientAccount.deleted = true;
+  deletedClientAccount.save();
+}
+else {
+  Mez:alertError("error_client_account_is_linked_to_asset");
+}
+return null;
+}
+
+void saveClientAccount(){
+  ClientAccountControllers:saveClientAccount(client_account);
+  init();
+}
+
+DSL_VIEWS back(){
+  return DSL_VIEWS.JobCardMenuView;
+}
+
+DSL_VIEWS backToClientAccount(){
+  return DSL_VIEWS.ClientAccountView;
+}
+
+DSL_VIEWS backToClientAccountOverview(){
+  return DSL_VIEWS.clientAccountOverView;
+}

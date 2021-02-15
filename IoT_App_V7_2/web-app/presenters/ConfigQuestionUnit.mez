@@ -1,0 +1,33 @@
+unit ConfigQuestionUnit;
+
+string name;
+string response_type;
+string[] response_types;
+
+ConfigQuestion[] configQuestions;
+ConfigQuestion configQuestion;
+
+ConfigurationPackage configurationPackage;
+
+void init(){
+  name = null;
+  response_type = null;
+  response_types.clear();
+  response_types.append("Text");
+  response_types.append("DateTime");
+  response_types.append("Number");
+  setCollections();
+}
+
+void setCollections(){
+  configQuestions = ConfigQuestionController:getConfigQuestionsForConfigQuestionPackage(configurationPackage);
+}
+
+void createButton(){
+  ConfigQuestion result = ConfigQuestionController:createConfigQuestion(name,response_type,configurationPackage);
+  init();
+}
+
+DSL_VIEWS backButton(){
+  return DSL_VIEWS.ConfigQuestionPackageForm;
+}

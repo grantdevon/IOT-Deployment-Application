@@ -1,0 +1,87 @@
+unit AssetsPres;
+
+Asset assets;
+Asset selectedAsset;
+Asset deletedAsset;
+
+decimal uploadedLat;
+decimal uploadedLong;
+
+Client_account clientAccountToAdd;
+
+AssetTypes AssetTypeToAdd;
+
+bool editing;
+
+void init(){
+
+  assets = Asset:new();
+  assets.account = null;
+  assets.asset_type = null;
+  editing = false;
+  assets.deleted = false;
+}
+
+void saveAssets(){
+  assets.account = clientAccountToAdd;
+  assets.asset_type = AssetTypeToAdd;
+  AssetsControllers:saveAssets(assets,clientAccountToAdd,AssetTypeToAdd);
+  init();
+}
+
+DSL_VIEWS addNew(){
+  return DSL_VIEWS.AssetsView;
+}
+
+DSL_VIEWS viewAsset(){
+  return DSL_VIEWS.AssetDetails;
+}
+
+DSL_VIEWS editAsset(){
+  editing = true;
+  return null;
+}
+
+DSL_VIEWS deleteAsset(){
+  Job_card[] temp = deletedAsset.job_cards;
+  if(temp.length()==0){
+    deletedAsset.deleted = true;
+    deletedAsset.save();
+  }
+  else {
+    Mez:alertError("error_job_card_is_linked_to_asset");
+  }
+  return null;
+}
+
+DSL_VIEWS back(){
+  return DSL_VIEWS.JobCardMenuView;
+}
+
+DSL_VIEWS backToAssetMgmt(){
+  return DSL_VIEWS.AssetsView;
+}
+
+DSL_VIEWS backToAssetOverview(){
+  return DSL_VIEWS.AssetOverView;
+}
+
+DSL_VIEWS add_lat_and_long(){
+  return DSL_VIEWS.mapView;
+}
+
+// @GET("v1/geoLocation")
+// json getGeoLocation{
+//   //latitude and longitude
+//   //sql?
+// }
+
+
+@POST("v1/geoLocation")
+json create(LocationData locationData) {
+    json result = ApiUtils:Response();
+   result.jsonPut("result", "okay");
+   uploadedLat = locationData.lat;
+   uploadedLong = locationData.long;
+    return result;
+}

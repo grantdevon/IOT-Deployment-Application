@@ -1,0 +1,58 @@
+unit JobCardMenu;
+
+MenuItem menuItem;
+
+MenuItem[] menuItems;
+
+MenuItem[] initMenu() {
+	menuItems.clear();
+
+	int order = 1;
+	menuItems.append(createMenuItem(order,	String:translate("menu_item.client_account"),DSL_VIEWS.clientAccountOverView,countClientAcounts())); order++;
+	menuItems.append(createMenuItem(order,	String:translate("menu_item.asset"), DSL_VIEWS.AssetOverView,countAsset())); order++;
+	menuItems.append(createMenuItem(order,	String:translate("menu_item.customer"), DSL_VIEWS.CustomerOverView,countCustomers())); order++;
+	menuItems.append(createMenuItem(order,	String:translate("menu_item.technicians"),DSL_VIEWS.TechnicianOverview ,countTechnicians())); order++;
+	menuItems.append(createMenuItem(order,	String:translate("menu_item.job_card_overview"), DSL_VIEWS.JobCardOverview,countJobCard())); order++;
+
+return menuItems;
+
+
+}
+
+int countTechnicians(){
+User[] techinician = User:equals(deleted, false);
+return techinician.length();
+}
+
+int countClientAcounts() {
+	Client_account[] clientAccount = Client_account:equals(deleted, false);
+	return clientAccount.length();
+}
+
+int countAsset() {
+	Asset[] assets = Asset:equals(deleted, false);
+	return assets.length();
+}
+
+int countJobCard(){
+	Job_card[] job_card = Job_card:equals(deleted, false);
+	return job_card.length();
+}
+
+int countCustomers(){
+Customer[] customer = Customer:equals(deleted, false);
+return customer.length();
+}
+
+MenuItem createMenuItem(int order,string label, DSL_VIEWS navigationDestination, int entityCount) {
+	MenuItem menuItem = MenuItem:new();
+	menuItem.label = label;
+	menuItem.order = order;
+	menuItem.description = entityCount;
+	menuItem.navigationDestination = navigationDestination;
+	return menuItem;
+}
+
+DSL_VIEWS selectMenuItem() {
+	return menuItem.navigationDestination;
+}

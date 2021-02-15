@@ -1,0 +1,120 @@
+unit JobCardPres;
+
+Job_card jobcard;
+Job_card selectedJobCard;
+bool editing;
+
+Customer customer;
+DeploymentType deploymentTypeToAdd;
+
+string[] status;
+string selectedStatus;
+
+JobTypes selectedJobType;
+
+Photograph selectedPicture;
+
+Asset assetToAdd;
+
+User technicianToAdd;
+
+bool showDetailInTable;
+
+string tableLable;
+
+void init(){
+  status();
+  // deploymentType = JobCardControllers:getAllDeploymentTypes();
+  // configType = ConfigurationPackageController:getAllNonDeletedConfigs();
+  jobcard = Job_card:new();
+  jobcard.deleted = false;
+  editing = false;
+  showDetailInTable = false;
+  selectedStatus = status.first();
+  jobcard.asset_type = null;
+  jobcard.technicians = null;
+  jobcard.status = null;
+  jobcard.deployment_types = null;
+  // jobcard.question_packages_fk = selectDeploymentType;
+  // jobcard.configurationPackage_fk = selectedConfigPackage;
+  jobcard.photos = selectedPicture;
+  tableLable = "expand table";
+}
+
+void status(){
+  status.clear();
+
+  status.append("Pending");
+  status.append("Work Started");
+  status.append("Installed");
+  status.append("Closed");
+  status.append("Cancelled");
+}
+
+
+void saveJobCard(){
+  jobcard.asset_type = assetToAdd;
+  jobcard.technicians = technicianToAdd;
+  jobcard.status = selectedStatus;
+  JobCardControllers:saveJobCard(jobcard,assetToAdd,technicianToAdd,selectedJobType,deploymentTypeToAdd,customer);
+  init();
+}
+
+DSL_VIEWS addNew(){
+  return DSL_VIEWS.JobCardView;
+}
+
+DSL_VIEWS viewJobCard(){
+  return DSL_VIEWS.JobCardDetails;
+}
+
+DSL_VIEWS editJobCard(){
+  editing = true;
+  return null;
+}
+
+DSL_VIEWS removeJobCard(){
+  jobcard.deleted = true;
+  init();
+  return null;
+}
+
+DSL_VIEWS backToJobCardMgmt(){
+  return DSL_VIEWS.JobCardView;
+}
+
+DSL_VIEWS backToJobCardOverview(){
+  return DSL_VIEWS.JobCardOverview;
+}
+
+DSL_VIEWS back(){
+  return DSL_VIEWS.JobCardMenuView;
+}
+
+//move to controller
+Job_card[] getCusSignatures(){
+  Job_card[] result;
+  selectedJobCard = jobcard;
+  result.append(selectedJobCard);
+  return result;
+}
+
+//move to controller
+Job_card[] getTechSignatures(){
+  Job_card[] result;
+  selectedJobCard = jobcard;
+  result.append(selectedJobCard);
+  return result;
+}
+
+string toggleShowDetailsInTable() {
+    if(showDetailInTable == false) {
+        showDetailInTable = true;
+        tableLable = "shrink table";
+    }
+    else{
+        showDetailInTable = false;
+        tableLable = "expand table";
+    }
+    return null;
+}
